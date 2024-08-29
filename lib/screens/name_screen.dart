@@ -8,19 +8,23 @@ class NameScreen extends StatelessWidget {
   final screenWidth;
   NameScreen(this.screenHeight, this.screenWidth);
 
-  @override
   Widget build(BuildContext context) {
     return AmbientMode(
+      key: Key('ambient_mode_key'),  // Provide a Key instance here
       builder: (context, mode) => mode == Mode.active
           ? NameScreenUI(screenHeight, screenWidth)
           : AmbientWatchFace(),
+      update: () {
+        // Provide your update function here
+      },
     );
   }
 }
 
 class NameScreenUI extends StatelessWidget {
-  final screenHeight;
-  final screenWidth;
+  final double screenHeight;
+  final double screenWidth;
+
   NameScreenUI(this.screenHeight, this.screenWidth);
 
   @override
@@ -31,6 +35,7 @@ class NameScreenUI extends StatelessWidget {
           height: screenHeight,
           width: screenWidth,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               InkWell(
                 child: Row(
@@ -43,8 +48,10 @@ class NameScreenUI extends StatelessWidget {
                     SizedBox(width: 5),
                     Text(
                       'Back',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+                      style: TextStyle(
+                        fontSize: 16, 
+                        fontWeight: FontWeight.w300,
+                      ),
                     )
                   ],
                 ),
@@ -67,23 +74,26 @@ class NameScreenUI extends StatelessWidget {
                   color: Colors.blue[700],
                 ),
               ),
-              SizedBox(height: 5),
-              RaisedButton(
-                highlightColor: Colors.blue[900],
-                elevation: 6.0,
+              SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue[400], // background (button) color
+                  foregroundColor: Colors.white, // foreground (text) color
+                  elevation: 6.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
                 child: Text(
                   'NEXT',
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                color: Colors.blue[400],
                 onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return RelaxView(screenHeight, screenWidth);
-                  }));
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) {
+                      return RelaxView(screenHeight, screenWidth);
+                    }),
+                  );
                 },
               )
             ],

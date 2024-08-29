@@ -21,14 +21,14 @@ enum Mode { active, ambient }
 
 /// An inherited widget that holds the shape of the Watch
 class InheritedShape extends InheritedWidget {
-  const InheritedShape({Key key, @required this.shape, @required Widget child})
+  const InheritedShape({required Key key, required this.shape, required Widget child})
       : assert(shape != null),
         assert(child != null),
         super(key: key, child: child);
 
   final Shape shape;
 
-  static InheritedShape of(BuildContext context) {
+  static InheritedShape? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<InheritedShape>();
   }
 
@@ -44,7 +44,7 @@ typedef Widget WatchShapeBuilder(
 
 /// Builder widget for watch shapes
 class WatchShape extends StatefulWidget {
-  WatchShape({Key key, @required this.builder})
+  WatchShape({required Key key, required this.builder})
       : assert(builder != null),
         super(key: key);
   final WatchShapeBuilder builder;
@@ -54,7 +54,7 @@ class WatchShape extends StatefulWidget {
 }
 
 class _WatchShapeState extends State<WatchShape> {
-  Shape shape;
+  late Shape shape;
 
   @override
   initState() {
@@ -98,7 +98,7 @@ typedef Widget AmbientModeWidgetBuilder(
 /// called every time the watch triggers an ambient update request. If an update
 /// function is passed in, this widget will not perform an update itself.
 class AmbientMode extends StatefulWidget {
-  AmbientMode({Key key, @required this.builder, this.update})
+  AmbientMode({required Key key, required this.builder, required this.update})
       : assert(builder != null),
         super(key: key);
   final AmbientModeWidgetBuilder builder;
@@ -130,6 +130,7 @@ class _AmbientModeState extends State<AmbientMode> {
           setState(() => ambientMode = Mode.active);
           break;
       }
+      return Future.value();
     });
   }
 

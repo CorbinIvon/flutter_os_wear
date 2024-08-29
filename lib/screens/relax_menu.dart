@@ -1,51 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_os_wear/screens/ambient_screen.dart';
-import 'package:flutter_os_wear/screens/sound_screen.dart';
 import 'package:flutter_os_wear/wear.dart';
 
 const img = 'assets/images/';
-List<String> screens = ['rain', 'forest', 'sunset', 'ocean'];
 
 class RelaxView extends StatelessWidget {
-  final screenHeight;
-  final screenWidth;
+  final double screenHeight;
+  final double screenWidth;
+
   RelaxView(this.screenHeight, this.screenWidth);
 
   @override
   Widget build(BuildContext context) {
     return AmbientMode(
+      key: Key('ambient_mode_key'),  // Provide a Key instance here
       builder: (context, mode) =>
           mode == Mode.active ? HomeRoute() : AmbientWatchFace(),
+      update: () {
+        // Provide your update function here
+      },
     );
   }
 }
 
 class HomeRoute extends StatelessWidget {
-  soundBtn(sound, context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => PlayRoute(sound: sound)));
-      },
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Image.asset(
-              'assets/icons/$sound.png',
-              scale: 1.2,
-            ),
-          ),
-          Text(sound.toUpperCase(),
-              style: TextStyle(
-                  color: Colors.white, fontSize: 16, letterSpacing: 3.0))
-        ],
-      ),
-    );
-  }
-
   @override
-  build(BuildContext context) {
+  Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Stack(
@@ -97,25 +77,7 @@ class HomeRoute extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 70.0),
-            child: Center(
-              child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    soundBtn('rain', context),
-                    soundBtn('forest', context),
-                    soundBtn('sunset', context),
-                    soundBtn('ocean', context),
-                    SizedBox(
-                      height: 40,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // Removed the sound buttons and their logic.
         ],
       ),
     );
