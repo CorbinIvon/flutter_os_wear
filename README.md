@@ -1,3 +1,6 @@
+# Note From Corbin
+My goal is to update the project to work with a new Flutter installation.
+
 # Flutter OS (Android Wear OS app)
 
 <p align="center">
