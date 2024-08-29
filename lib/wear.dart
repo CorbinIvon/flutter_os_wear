@@ -83,10 +83,17 @@ class _WatchShapeState extends State<WatchShape> {
   /// Fetches the shape of the watch face
   Future<Shape> _getShape() async {
     try {
-      final int result = await _channel.invokeMethod('getShape');
-      return result == 1 ? Shape.square : Shape.round;
+      // Expecting a String result instead of an int
+      final String result = await _channel.invokeMethod('getShape');
+
+      // Check the returned String and map it to the appropriate Shape enum
+      if (result == 'square') {
+        return Shape.square;
+      } else {
+        return Shape.round;  // Default to round if the result is 'round' or unrecognized
+      }
     } on PlatformException catch (e) {
-      // Default to round
+      // Default to round in case of an error
       debugPrint('Error detecting shape: $e');
       return Shape.round;
     }
