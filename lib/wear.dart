@@ -6,6 +6,15 @@ import 'package:meta/meta.dart';
 
 const MethodChannel _channel = const MethodChannel('wear');
 
+class WearPlatform {
+  static const MethodChannel _channel = MethodChannel('wear');
+
+  Future<String?> getShape() async {
+    final String? shape = await _channel.invokeMethod('getShape');
+    return shape;
+  }
+}
+
 class Wear {
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
